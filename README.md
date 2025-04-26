@@ -90,7 +90,7 @@ git clone https://github.com/entria/woovi-playground.git
    ```
 
 2. Run the container(or stop it, if necessary):
-  
+
    ```sh
    pnpm compose:up
    ```
@@ -103,15 +103,48 @@ git clone https://github.com/entria/woovi-playground.git
 
 4. Run the relay
 
-    ```sh
-    pnpm relay
-    ```
+   ```sh
+   pnpm relay
+   ```
 
 5. Run the Project
 
    ```sh
    pnpm dev
    ```
+
+## About This Project
+
+This project was developed as part of the Woovi challenge, which consists of creating a bank CRUD using GraphQL and Relay.
+
+The project allows:
+
+- Sending transactions between accounts
+- Receiving transactions
+- Calculating available account balance
+
+### Technologies Used
+
+#### Backend
+
+- MongoDB
+- NodeJS
+- KoaJS
+- GraphQL
+
+#### Frontend
+
+- React
+- Vite
+- React Router
+- Relay
+- Shadcn UI
+
+### Credits
+
+This project was initiated from [Woovi Playground](https://github.com/woovibr/woovi-playground), a boilerplate provided by Woovi for the challenge.
+
+<p align="right">(<a href="#top">back to top</a>)</p>
 
 <!-- CONTRIBUTING -->
 
