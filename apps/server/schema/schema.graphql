@@ -12,6 +12,27 @@ type Query {
     """Returns the last n items from the list."""
     last: Int
   ): MessageConnection
+
+  """Returns an account by ID"""
+  account(
+    """The globlal ID of the account"""
+    id: ID
+  ): Account
+
+  """Returns a list of all accounts"""
+  accounts(
+    """Returns the items in the list that come after the specified cursor."""
+    after: String
+
+    """Returns the first n items from the list."""
+    first: Int
+
+    """Returns the items in the list that come before the specified cursor."""
+    before: String
+
+    """Returns the last n items from the list."""
+    last: Int
+  ): AccountConnection
 }
 
 """A connection to a list of items."""
@@ -61,8 +82,50 @@ interface Node {
   id: ID!
 }
 
+"""Represents a bank account"""
+type Account implements Node {
+  """The ID of an object"""
+  id: ID!
+
+  """MongoDB ObjectID"""
+  _id: ID
+
+  """Account owner name"""
+  name: String
+
+  """Current account balance"""
+  balance: Float
+
+  """Creation date of the account"""
+  createdAt: String
+
+  """Last update date of the account"""
+  updatedAt: String
+}
+
+"""A connection to a list of items."""
+type AccountConnection {
+  """Information to aid in pagination."""
+  pageInfo: PageInfo!
+
+  """A list of edges."""
+  edges: [AccountEdge]
+}
+
+"""An edge in a connection."""
+type AccountEdge {
+  """The item at the end of the edge"""
+  node: Account
+
+  """A cursor for use in pagination"""
+  cursor: String!
+}
+
 type Mutation {
   MessageAdd(input: MessageAddInput!): MessageAddPayload
+
+  """Create a new account"""
+  AccountCreate(input: AccountCreateInput!): AccountCreatePayload
 }
 
 type MessageAddPayload {
@@ -72,6 +135,22 @@ type MessageAddPayload {
 
 input MessageAddInput {
   content: String!
+  clientMutationId: String
+}
+
+type AccountCreatePayload {
+  """Returns an account by ID"""
+  account: Account
+  error: String
+  clientMutationId: String
+}
+
+input AccountCreateInput {
+  """Account owner name"""
+  name: String!
+
+  """Initial account balance"""
+  initialBalance: Float = 0
   clientMutationId: String
 }
 
