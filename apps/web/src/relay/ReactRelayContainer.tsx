@@ -1,21 +1,16 @@
-import { Suspense, useMemo } from 'react';
-import { createEnvironment } from './environment';
-import { NextPageWithLayout, RelayHydrate } from './RelayHydrate';
 import { ReactRelayContext } from 'react-relay';
+import { Suspense, useMemo } from 'react';
 
-export function ReactRelayContainer<T>({
-	Component,
-	props,
-}: {
-	Component: NextPageWithLayout<T>;
-	props: any;
-}) {
-	const environment = useMemo(() => createEnvironment(), []);
-	return (
-		<ReactRelayContext.Provider value={{ environment }}>
-			<Suspense fallback={null}>
-				<RelayHydrate Component={Component} props={props} />
-			</Suspense>
-		</ReactRelayContext.Provider>
-	);
+import { PageWithLayout, RelayHydrate } from './RelayHydrate';
+import { createEnvironment } from './environment';
+
+export function ReactRelayContainer<T>({ Component, props }: { Component: PageWithLayout<T>; props: any }) {
+  const environment = useMemo(() => createEnvironment(), []);
+  return (
+    <ReactRelayContext.Provider value={{ environment }}>
+      <Suspense fallback={<div>Carregando...</div>}>
+        <RelayHydrate Component={Component} props={props} />
+      </Suspense>
+    </ReactRelayContext.Provider>
+  );
 }
